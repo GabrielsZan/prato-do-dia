@@ -130,7 +130,9 @@ O YAZIO serve só como referência de **funções**. Não copiar nome, logo, mas
 
 - **Vite + TypeScript + Preact**: componentes leves, fácil de organizar muitas telas, build pequeno.
 - **PWA**: `manifest.webmanifest` e service worker que guarda o app inteiro para funcionar offline. Respeitar as áreas seguras do iPhone (`env(safe-area-inset-*)`, `viewport-fit=cover`).
-- **Hospedagem**: GitHub Pages, **substituindo o Prato do Dia antigo** em `https://gabrielszan.github.io/prato-do-dia/` (repositório público `GabrielsZan/prato-do-dia`) quando a primeira versão do diário estiver pronta. Até lá, testar localmente. Antes de trocar, avisar o Gabriel e oferecer importar os dados do app antigo (localStorage, chave `prato-do-dia-v1`).
+- **Hospedagem**: GitHub Pages em `https://gabrielszan.github.io/prato-do-dia/` (repositório público `GabrielsZan/prato-do-dia`, remoto `origin`). Desde 03/11/2026 substitui o app antigo (cardápio), que fica no histórico (commit `beedeb3`). Ele escolheu começar do zero, sem importar dados do antigo.
+- **Publicar**: `git push origin main`. O workflow `.github/workflows/publicar.yml` roda os testes, monta e publica sozinho. O service worker (vite-plugin-pwa) atualiza o app no iPhone na próxima abertura.
+- **Testes de tela**: `npm run build`, depois `npm run telas` (diário) e `node scripts/teste-codigo.mjs` (código de barras com câmera falsa). `URL=https://gabrielszan.github.io/prato-do-dia/ npm run telas` testa o site publicado.
 - **IndexedDB com Dexie.js** para os dados. Pedir `navigator.storage.persist()`. Lembrar que o Safari pode apagar dados de sites não instalados; instalado na tela inicial fica protegido, e o backup cobre o resto.
 - **Tudo offline**, exceto o código de barras. Ícones empacotados no app.
 - Código de barras: câmera pelo navegador (`getUserMedia`) com leitura em JavaScript (ex.: `@zxing/browser`), porque o Safari não tem `BarcodeDetector`.

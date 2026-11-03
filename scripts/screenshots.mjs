@@ -1,6 +1,6 @@
 // Usa o app já compilado (dist/) num "iPhone" 390×844: registra alimentos, confere as somas,
 // conta os toques, fecha e reabre, testa sem internet e salva screenshots em telas/.
-// Rodar depois de `npm run build`.
+// Rodar depois de `npm run build`. Com URL=https://... testa o site publicado.
 import { preview } from 'vite';
 import { chromium } from 'playwright-core';
 import { mkdirSync } from 'node:fs';
@@ -8,8 +8,8 @@ import { mkdirSync } from 'node:fs';
 const saida = 'telas';
 mkdirSync(saida, { recursive: true });
 
-const servidor = await preview({ preview: { port: 4173, strictPort: true } });
-const url = 'http://localhost:4173/prato-do-dia/';
+const servidor = process.env.URL ? null : await preview({ preview: { port: 4173, strictPort: true } });
+const url = process.env.URL ?? 'http://localhost:4173/prato-do-dia/';
 const navegador = await chromium.launch({ channel: 'msedge' });
 const contexto = await navegador.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
 const p = await contexto.newPage();
@@ -103,5 +103,5 @@ await p.waitForSelector('.tela-hoje');
 await esperarConsumido('632', 'abre sem internet com os dados');
 
 await navegador.close();
-servidor.httpServer.close();
+servidor?.httpServer.close();
 process.exit(falhou ? 1 : 0);
