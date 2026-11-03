@@ -1,10 +1,8 @@
-# App de dieta — contagem de calorias
-
-> Nome provisório. Nome e visual definitivos são decididos na Etapa 0.
+# Prato do Dia — contagem de calorias
 
 ## Sobre o projeto
 
-App pessoal de dieta do Gabriel, para uso só dele, no celular Android (APK).
+App pessoal de dieta do Gabriel, para uso só dele, no **iPhone**, como PWA (app web instalado na tela inicial pelo Safari).
 Feito **totalmente do zero**: código, visual e conteúdo novos. Não existe código antigo para reaproveitar.
 
 **O coração do app é o diário: registrar o que ele comeu, rápido e sem atrito, no estilo do YAZIO.**
@@ -83,7 +81,7 @@ O YAZIO serve só como referência de **funções**. Não copiar nome, logo, mas
 - Se nenhum cardápio estiver configurado, o app funciona normalmente sem ele.
 
 ### Fase 2 (depois, não começar sem ele pedir)
-- Registro por **foto com IA**: o app manda a foto para uma edge function no Supabase, que chama a API do Claude com visão e devolve os alimentos com gramas estimados; ele confere e confirma antes de registrar. A chave da API fica **só** no servidor, nunca no APK.
+- Registro por **foto com IA**: o app manda a foto para uma edge function no Supabase, que chama a API do Claude com visão e devolve os alimentos com gramas estimados; ele confere e confirma antes de registrar. A chave da API fica **só** no servidor, nunca no código do app.
 - Receitas próprias com comida simples do dia a dia.
 - Registro de exercício (calorias gastas somadas ao dia).
 - Relatório de micronutrientes (fibra, sódio, cálcio, ferro etc., que a TACO já tem).
@@ -120,14 +118,23 @@ O YAZIO serve só como referência de **funções**. Não copiar nome, logo, mas
 - Precisa de internet só no momento do escaneamento.
 - Licença ODbL: dar o crédito "Dados de produtos: Open Food Facts" na tela de créditos.
 
-## Arquitetura (recomendação — confirmar na Etapa 0)
+## Decisões da Etapa 0 (aprovadas em 03/11/2026)
+
+- **Nome**: Prato do Dia.
+- **Visual**: claro e fresco. Fundo `#F7F7F2`, cartões brancos com cantos arredondados, verde-folha `#2F9E5B` como cor principal, proteína em laranja `#F08A24`, carboidrato em amarelo `#E2B228`, gordura em azul `#4F86E8`. Fonte do sistema (SF no iPhone), sem fontes externas.
+- **Mockups aprovados** em `mockups/` (hoje, adicionar, quantidade). São a referência visual das telas.
+- **Barra de baixo**: Hoje, Progresso, **+** central (abre a busca na refeição do horário), Jejum, Mais.
+- **Toques**: recente = 2 toques (+ da refeição, + do alimento); alimento novo = 3 toques + digitação.
+
+## Arquitetura
 
 - **Vite + TypeScript + Preact**: componentes leves, fácil de organizar muitas telas, build pequeno.
-- **Capacitor** para gerar o APK Android.
-- **IndexedDB com Dexie.js** para os dados (mais espaço e mais robusto que `localStorage`).
-- **Tudo offline**, exceto o código de barras. Fontes e ícones empacotados no app, sem Google Fonts.
-- Código de barras: plugin nativo `@capacitor-mlkit/barcode-scanning` no APK, com fallback em JavaScript (ex.: `@zxing/browser`) para testar no navegador. Declarar a permissão de câmera no Android.
-- Backup no APK: `@capacitor/filesystem` + `@capacitor/share`, porque download e compartilhamento de arquivo pelo navegador não funcionam no WebView do Android.
+- **PWA**: `manifest.webmanifest` e service worker que guarda o app inteiro para funcionar offline. Respeitar as áreas seguras do iPhone (`env(safe-area-inset-*)`, `viewport-fit=cover`).
+- **Hospedagem**: GitHub Pages, **substituindo o Prato do Dia antigo** em `https://gabrielszan.github.io/prato-do-dia/` (repositório público `GabrielsZan/prato-do-dia`) quando a primeira versão do diário estiver pronta. Até lá, testar localmente. Antes de trocar, avisar o Gabriel e oferecer importar os dados do app antigo (localStorage, chave `prato-do-dia-v1`).
+- **IndexedDB com Dexie.js** para os dados. Pedir `navigator.storage.persist()`. Lembrar que o Safari pode apagar dados de sites não instalados; instalado na tela inicial fica protegido, e o backup cobre o resto.
+- **Tudo offline**, exceto o código de barras. Ícones empacotados no app.
+- Código de barras: câmera pelo navegador (`getUserMedia`) com leitura em JavaScript (ex.: `@zxing/browser`), porque o Safari não tem `BarcodeDetector`.
+- Backup: exportar com a Web Share API (`navigator.share` com arquivo), que abre a tela de compartilhar do iPhone (WhatsApp, Drive, Arquivos); importar com `<input type="file">`.
 
 ### Modelo de dados (ponto de partida)
 - `alimentos`: id, nome, apelido, fonte (taco | extra | proprio | off), código de barras, valores por 100 g, porções, favorito, última quantidade usada.
@@ -139,11 +146,11 @@ O YAZIO serve só como referência de **funções**. Não copiar nome, logo, mas
 
 ## Roteiro (uma etapa por vez, com checkpoint no fim de cada uma)
 
-0. **Decisões e mockups**: nome do app; visual novo; confirmar a stack. Mockups estáticos das telas Hoje e Adicionar alimento, no tamanho de celular. Essas duas telas são as mais importantes do app, então vale iterar até ele gostar.
-1. **Base**: projeto Vite + Preact + Capacitor, banco local com Dexie, script da TACO, apelidos e busca funcionando.
+0. **Decisões e mockups** — concluída (veja "Decisões da Etapa 0").
+1. **Base**: projeto Vite + Preact como PWA, banco local com Dexie, script da TACO, apelidos e busca funcionando.
 2. **Diário**: telas Hoje e Adicionar alimento completas (recentes, favoritos, porções, editar e apagar, só calorias, refeições salvas, copiar refeição), metas e troca de dia.
 3. **Código de barras** com o Open Food Facts e cadastro de alimento próprio.
-4. **Primeiro APK**: gerar e instalar no celular para ele já começar a usar o diário no dia a dia. A partir daqui, cada etapa termina com um APK atualizado.
+4. **Primeira versão no iPhone**: publicar no GitHub Pages (no lugar do app antigo) e instalar na tela inicial para ele já começar a usar o diário no dia a dia. A partir daqui, cada etapa termina com uma versão publicada.
 5. **Água, peso e progresso**: gráficos, médias semanais e sequência.
 6. **Jejum, compras e backup.**
 7. **Cardápio e trocas**, montados do zero com ele, a partir do que ele já estiver comendo no diário.
@@ -157,8 +164,8 @@ O YAZIO serve só como referência de **funções**. Não copiar nome, logo, mas
   - fechar e reabrir o app e conferir se os dados continuam lá;
   - abrir sem internet e conferir se tudo funciona, exceto o código de barras;
   - exportar e importar um backup e conferir se nada se perde.
-- No APK:
+- No iPhone (app instalado na tela inicial):
   - permissão de câmera e escaneamento real de um produto;
-  - backup pela tela de compartilhar do Android;
-  - nada escondido atrás das barras do sistema.
-- **Atualizações sem perder dados**: depois do primeiro APK, ele vai ter dados reais no celular. Manter sempre o mesmo `appId` e a mesma chave de assinatura, para que cada APK novo instale por cima do antigo. Desinstalar apaga os dados. Antes de qualquer mudança no formato do banco, escrever a migração do Dexie e lembrar ele de exportar um backup.
+  - backup pela tela de compartilhar do iPhone;
+  - nada escondido atrás do notch, da ilha dinâmica ou da barra de gestos.
+- **Atualizações sem perder dados**: depois da primeira versão, ele vai ter dados reais no celular. Manter sempre o mesmo endereço (os dados ficam presos à origem `gabrielszan.github.io`) e o mesmo nome de banco do Dexie. Remover o app da tela inicial apaga os dados. A cada versão nova, mudar a versão do service worker para o iPhone baixar a atualização. Antes de qualquer mudança no formato do banco, escrever a migração do Dexie e lembrar ele de exportar um backup.
