@@ -19,6 +19,7 @@ describe('busca', () => {
     expect(primeiro('peito de frango')).toBe('taco:410');
     expect(primeiro('cuscuz')).toBe('taco:533');
     expect(primeiro('queijo minas')).toBe('taco:461');
+    expect(primeiro('frango')).toBe('taco:410');
   });
 
   it('ignora acentos e maiúsculas', () => {

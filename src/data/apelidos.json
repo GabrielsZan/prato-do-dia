@@ -15,7 +15,7 @@
   { "taco": 490, "nome": "Ovo frito" },
   { "taco": 489, "nome": "Ovo cru" },
   { "taco": 486, "nome": "Clara de ovo cozida", "outros": ["clara"] },
-  { "taco": 410, "nome": "Peito de frango grelhado", "outros": ["frango grelhado", "filé de frango", "peito de frango"] },
+  { "taco": 410, "nome": "Peito de frango grelhado", "padrao": true, "outros": ["frango grelhado", "filé de frango", "peito de frango"] },
   { "taco": 408, "nome": "Peito de frango cozido", "outros": ["frango desfiado"] },
   { "taco": 409, "nome": "Peito de frango cru" },
   { "taco": 396, "nome": "Coxa de frango assada", "outros": ["coxa de frango"] },

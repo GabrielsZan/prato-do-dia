@@ -21,6 +21,7 @@ export interface Alimento {
   nome: string; // nome do dia a dia, mostrado em destaque
   nomeOriginal?: string; // nome na TACO, mostrado em letra menor
   outrosNomes?: string[]; // outros apelidos que também encontram este alimento
+  padrao?: boolean; // versão mais comum quando a busca é genérica ("frango")
   marca?: string;
   codigoBarras?: string;
   por100: Nutrientes;

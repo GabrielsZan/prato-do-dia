@@ -3,7 +3,7 @@ import apelidos from '../data/apelidos.json';
 import extras from '../data/extras.json';
 import type { Alimento } from './tipos';
 
-interface Apelido { taco: number; nome: string; outros?: string[] }
+interface Apelido { taco: number; nome: string; outros?: string[]; padrao?: boolean }
 
 type LinhaTaco = [number, number, string, ...(number | null)[]];
 
@@ -19,6 +19,7 @@ export function carregarCatalogo(): Alimento[] {
       nome: ap ? ap.nome : nome,
       nomeOriginal: ap ? nome : undefined,
       outrosNomes: ap?.outros,
+      padrao: ap?.padrao,
       por100: { kcal, proteina, carbo, gordura, fibra, sodio } as Alimento['por100'],
     };
   });
