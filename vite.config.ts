@@ -22,7 +22,7 @@ export default defineConfig({
           { src: 'icone-512.png', sizes: '512x512', type: 'image/png' },
         ],
       },
-      workbox: { globPatterns: ['**/*.{js,css,html,svg,png,json}'] },
+      workbox: { globPatterns: ['**/*.{js,css,html,svg,png,json,wasm}'], maximumFileSizeToCacheInBytes: 3 * 1024 * 1024 },
     }),
   ],
   test: { environment: 'node' },

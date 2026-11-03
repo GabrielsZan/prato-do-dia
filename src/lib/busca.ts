@@ -85,14 +85,15 @@ export class Buscador {
       let pontos = 0;
       if (it.apelidosN.includes(q) || it.apelidosN.includes(qSing)) pontos += 100;
       else if (it.apelidosN.some((n) => n.startsWith(q) || n.startsWith(qSing))) pontos += 40;
-      if (todosNoApelido && it.alimento.nomeOriginal) pontos += 30;
+      if (todosNoApelido && (it.alimento.nomeOriginal || it.alimento.fonte !== 'taco')) pontos += 30;
       if (it.alimento.fonte !== 'taco') pontos += 15; // próprios, escaneados e extras são os que ele usa de fato
       pontos += it.pronto * 8;
       if (it.alimento.padrao) pontos += 5;
       const u = uso.get(it.alimento.id);
       if (u) {
-        if (u.favorito) pontos += 60;
-        if (u.ultimoUso) pontos += 50 + Math.min(u.vezes, 20);
+        // Recentes e favoritos sempre na frente do resto.
+        if (u.favorito) pontos += 80;
+        if (u.ultimoUso) pontos += 80 + Math.min(u.vezes, 20);
       }
       pontos -= it.nomeN.length * 0.1; // nomes curtos primeiro em caso de empate
       resultado.push({ a: it.alimento, pontos });

@@ -23,6 +23,25 @@ export async function atualizarProprios() {
   buscador.definir([...catalogo, ...proprios]);
 }
 
+// Alimento próprio ou escaneado: grava no banco e já entra na busca.
+export async function salvarProprio(a: Alimento) {
+  await db.alimentos.put(a);
+  await atualizarProprios();
+}
+
+// Os registros antigos continuam no diário (eles guardam a própria cópia dos valores).
+export async function apagarProprio(id: string) {
+  await db.alimentos.delete(id);
+  porId.delete(id);
+  await atualizarProprios();
+}
+
+export const buscarPorCodigo = (codigo: string) => db.alimentos.where('codigoBarras').equals(codigo).first();
+
+export function novoId(): string {
+  return `proprio:${crypto.randomUUID?.() ?? Date.now().toString(36) + Math.random().toString(36).slice(2)}`;
+}
+
 export function alimentoPorId(id: string): Alimento | undefined {
   return porId.get(id);
 }

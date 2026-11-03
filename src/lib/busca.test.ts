@@ -52,6 +52,13 @@ describe('busca', () => {
     expect(primeiro('merluza assada')).toBe('taco:301');
   });
 
+  it('alimento recente vem antes até do nome exato', () => {
+    const uso = new Map<string, Uso>([
+      ['taco:1', { alimentoId: 'taco:1', favorito: 0, ultimoUso: Date.now(), vezes: 1 }],
+    ]);
+    expect(primeiro('arroz', uso)).toBe('taco:1');
+  });
+
   it('recentes e favoritos vêm primeiro', () => {
     const uso = new Map<string, Uso>([
       ['taco:179', { alimentoId: 'taco:179', favorito: 1, ultimoUso: Date.now(), vezes: 5 }],
