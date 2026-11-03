@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prato do Dia — Quantidade</title>
+<style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style>
+<style>
+  body { background: #FFFFFF; }
+  .busca { margin: 52px 16px 0; height: 48px; border-radius: 14px; background: var(--fundo); padding: 0 14px; display: flex; align-items: center; font-size: 17px; }
+  .linha { margin: 0 16px; padding: 12px 0; border-bottom: 1px solid var(--linha); }
+  .linha b { display: block; font-size: 15px; font-weight: 600; }
+  .linha small { font-size: 12px; color: var(--suave); }
+  .veu { position: fixed; inset: 0; background: rgba(20,24,22,.38); }
+  .folha { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: 100%; max-width: 430px; background: var(--cartao); border-radius: 24px 24px 0 0; padding: 10px 18px 34px; }
+  .pega { width: 38px; height: 5px; border-radius: 3px; background: var(--linha); margin: 0 auto 14px; }
+  .titulo { display: flex; align-items: flex-start; gap: 10px; }
+  .titulo h2 { flex: 1; font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
+  .titulo small { display: block; font-size: 12px; font-weight: 400; color: var(--suave); margin-top: 2px; letter-spacing: 0; }
+  .estrela { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--fundo); color: var(--amarelo); }
+  .porcoes { display: flex; gap: 8px; margin: 16px 0 12px; flex-wrap: wrap; }
+  .porcoes span { padding: 8px 13px; border-radius: 20px; background: var(--fundo); font-size: 14px; font-weight: 600; }
+  .porcoes .on { background: var(--verde); color: #fff; }
+  .qtd { display: flex; align-items: center; gap: 12px; }
+  .qtd button { width: 48px; height: 48px; border-radius: 14px; background: var(--fundo); font-size: 26px; font-weight: 500; }
+  .qtd .valor { flex: 1; height: 56px; border-radius: 14px; border: 2px solid var(--verde); display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .qtd .valor b { font-size: 28px; font-weight: 800; }
+  .qtd .valor span { color: var(--suave); font-size: 15px; }
+  .gramas { text-align: center; font-size: 13px; color: var(--suave); margin-top: 6px; }
+  .previa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
+  .previa div { background: var(--fundo); border-radius: 14px; padding: 10px 6px; text-align: center; }
+  .previa b { display: block; font-size: 18px; font-weight: 800; }
+  .previa span { font-size: 11px; color: var(--suave); }
+  .confirmar { width: 100%; height: 54px; border-radius: 16px; background: var(--verde); color: #fff; font-size: 17px; font-weight: 700; }
+  .ref-troca { text-align: center; margin-top: 12px; font-size: 13px; color: var(--suave); }
+  .ref-troca b { color: var(--texto); }
+</style>
+</head>
+<body>
+  <div class="busca">frango</div>
+  <div class="linha"><b>Peito de frango grelhado</b><small>Frango, peito, sem pele, grelhado · 159 kcal/100 g</small></div>
+  <div class="linha"><b>Coxa de frango assada</b><small>Frango, coxa, com pele, assada · 215 kcal/100 g</small></div>
+  <div class="linha"><b>Peito de frango cru</b><small>Frango, peito, sem pele, cru · 119 kcal/100 g</small></div>
+
+  <div class="veu"></div>
+  <div class="folha">
+    <div class="pega"></div>
+    <div class="titulo">
+      <h2>Peito de frango grelhado<small>Frango, peito, sem pele, grelhado · TACO</small></h2>
+      <button class="estrela" aria-label="Favoritar"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1.1 6.3L12 17.4l-5.6 3 1.1-6.3L3 9.7l6.2-.9z"/></svg></button>
+    </div>
+
+    <div class="porcoes"><span>gramas</span><span class="on">1 filé médio</span><span>1 colher de sopa</span></div>
+
+    <div class="qtd">
+      <button aria-label="Menos">−</button>
+      <div class="valor"><b>1</b><span>filé médio</span></div>
+      <button aria-label="Mais">+</button>
+    </div>
+    <div class="gramas">= 120 g · última vez você comeu 1 filé</div>
+
+    <div class="previa">
+      <div><b>191</b><span>kcal</span></div>
+      <div><b style="color:var(--laranja)">38 g</b><span>proteína</span></div>
+      <div><b>0 g</b><span>carbo</span></div>
+      <div><b>3 g</b><span>gordura</span></div>
+    </div>
+
+    <button class="confirmar">Adicionar ao almoço</button>
+    <div class="ref-troca">Refeição: <b>Almoço</b> · trocar</div>
+  </div>
+</body>
+</html>

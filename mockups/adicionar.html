@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prato do Dia — Adicionar</title>
+<style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style>
+<style>
+  body { background: var(--cartao); }
+  .cab { display: flex; align-items: center; gap: 8px; padding: 4px 12px 8px; }
+  .cab .x { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: var(--suave); }
+  .cab .ref { flex: 1; text-align: center; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .busca { margin: 0 16px; display: flex; align-items: center; gap: 10px; background: var(--fundo); border: 2px solid var(--verde); border-radius: 14px; padding: 0 12px; height: 48px; }
+  .busca input { flex: 1; border: none; background: none; font: inherit; font-size: 17px; outline: none; color: var(--texto); }
+  .busca .cursor { width: 2px; height: 22px; background: var(--verde); margin-left: -6px; }
+  .busca .cod { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: var(--texto); background: var(--cartao); }
+  .atalhos { display: flex; gap: 8px; padding: 12px 16px 4px; overflow-x: auto; }
+  .atalho { flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 20px; background: var(--fundo); font-size: 13px; font-weight: 600; }
+  .abinhas { display: flex; gap: 20px; padding: 14px 16px 0; border-bottom: 1px solid var(--linha); font-size: 14px; font-weight: 600; color: var(--suave); }
+  .abinhas span { padding-bottom: 10px; }
+  .abinhas .on { color: var(--texto); border-bottom: 2.5px solid var(--verde); }
+  .lista { padding: 0 16px; }
+  .linha { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--linha); }
+  .linha .n { flex: 1; min-width: 0; }
+  .linha .n b { font-size: 15px; font-weight: 600; display: block; }
+  .linha .n span { font-size: 13px; color: var(--suave); }
+  .linha .estrela { color: var(--amarelo); font-size: 12px; }
+  .salva { display: inline-block; font-size: 11px; font-weight: 700; color: var(--verde); background: var(--verde-claro); padding: 1px 6px; border-radius: 6px; margin-left: 4px; vertical-align: 1px; }
+  .teclado { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 291px; background: #D3D6DC; display: flex; align-items: center; justify-content: center; color: #8A8F98; font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="status"><span>9:41</span><span>●●● 100%</span></div>
+
+  <div class="cab">
+    <button class="x" aria-label="Fechar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="ref">Lanche da tarde <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="busca">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B746E" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input placeholder="Buscar alimento" readonly><div class="cursor"></div>
+    <button class="cod" aria-label="Ler código de barras"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M16 8v8"/></svg></button>
+  </div>
+
+  <div class="atalhos">
+    <span class="atalho"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z"/></svg>Só calorias</span>
+    <span class="atalho"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V5a1 1 0 011-1h11"/></svg>Copiar de outro dia</span>
+    <span class="atalho"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Criar alimento</span>
+  </div>
+
+  <div class="abinhas"><span class="on">Recentes</span><span>Favoritos</span><span>Refeições salvas</span><span>Meus</span></div>
+
+  <div class="lista">
+    <div class="linha">
+      <div class="n"><b>Pão francês</b><span>1 unidade · 150 kcal</span></div>
+      <button class="btn-mais" aria-label="Registrar pão francês"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    <div class="linha">
+      <div class="n"><b>Ovo cozido <span class="estrela">★</span></b><span>2 unidades · 146 kcal</span></div>
+      <button class="btn-mais" aria-label="Registrar ovo cozido"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    <div class="linha">
+      <div class="n"><b>Meu café de sempre <span class="salva">SALVA</span></b><span>cuscuz, 2 ovos, queijo · 395 kcal</span></div>
+      <button class="btn-mais" aria-label="Registrar meu café de sempre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    <div class="linha">
+      <div class="n"><b>Banana prata</b><span>1 unidade · 69 kcal</span></div>
+      <button class="btn-mais" aria-label="Registrar banana prata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+  </div>
+
+  <div class="teclado">teclado do iPhone (já aberto)</div>
+</body>
+</html>

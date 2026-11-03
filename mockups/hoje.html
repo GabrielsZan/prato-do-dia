@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prato do Dia — Hoje</title>
+<style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style>
+<style>
+  .topo { display: flex; align-items: center; justify-content: space-between; padding: 4px 16px 10px; }
+  .topo h1 { font-size: 28px; font-weight: 800; letter-spacing: -.5px; }
+  .dia { display: flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 600; }
+  .dia button { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: var(--suave); }
+  .dia .data { padding: 6px 12px; background: var(--cartao); border-radius: 20px; }
+
+  .resumo { margin: 0 16px; padding: 18px; display: flex; gap: 18px; align-items: center; }
+  .anel { position: relative; width: 128px; height: 128px; flex-shrink: 0; }
+  .anel svg { transform: rotate(-90deg); }
+  .anel .meio { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .anel .num { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+  .anel .rot { font-size: 12px; color: var(--suave); margin-top: -2px; }
+  .macros { flex: 1; display: flex; flex-direction: column; gap: 11px; }
+  .macro .linha1 { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .macro .linha1 b { font-weight: 700; }
+  .barra { height: 7px; border-radius: 4px; background: var(--linha); overflow: hidden; }
+  .barra i { display: block; height: 100%; border-radius: 4px; }
+  .consumo { font-size: 13px; color: var(--suave); margin-top: 2px; }
+  .consumo b { color: var(--texto); }
+
+  .mini { display: flex; gap: 10px; margin: 10px 16px 0; }
+  .mini .cartao { flex: 1; padding: 11px 12px; display: flex; align-items: center; gap: 10px; }
+  .mini .ico { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
+  .mini .t { font-size: 12px; color: var(--suave); }
+  .mini .v { font-size: 15px; font-weight: 700; }
+  .gotas { display: flex; gap: 3px; margin-top: 3px; }
+  .gotas i { width: 9px; height: 12px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: var(--azul); }
+  .gotas i.vazia { background: var(--azul-claro); }
+
+  .refeicoes { margin: 14px 16px 120px; display: flex; flex-direction: column; gap: 10px; }
+  .ref { padding: 14px 14px 6px; }
+  .ref-cab { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; }
+  .ref-cab .nome { font-size: 16px; font-weight: 700; }
+  .ref-cab .kcal { font-size: 13px; color: var(--suave); }
+  .ref-cab .info { flex: 1; }
+  .item { display: flex; align-items: center; padding: 9px 0; border-top: 1px solid var(--linha); font-size: 14px; }
+  .item .n { flex: 1; }
+  .item .q { font-size: 12px; color: var(--suave); }
+  .item .k { font-weight: 600; font-size: 14px; }
+  .vazio { border-top: 1px solid var(--linha); padding: 10px 0 8px; font-size: 13px; color: var(--suave); }
+  .sugestao { display: flex; align-items: center; gap: 8px; border-top: 1px dashed var(--linha); padding: 9px 0; font-size: 13px; color: var(--suave); }
+  .sugestao b { color: var(--verde); font-weight: 600; }
+
+  .abas { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 84px; background: rgba(255,255,255,.94); backdrop-filter: blur(12px); border-top: 1px solid var(--linha); display: flex; justify-content: space-around; padding-top: 8px; }
+  .aba { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: var(--suave); width: 70px; }
+  .aba.ativa { color: var(--verde); font-weight: 600; }
+  .aba svg { width: 24px; height: 24px; }
+  .fab { width: 54px; height: 54px; border-radius: 50%; background: var(--verde); color: #fff; display: grid; place-items: center; margin-top: -22px; box-shadow: 0 6px 16px rgba(47,158,91,.35); }
+  .fab svg { width: 26px; height: 26px; }
+</style>
+</head>
+<body>
+  <div class="status"><span>9:41</span><span>●●● 100%</span></div>
+
+  <div class="topo">
+    <h1>Hoje</h1>
+    <div class="dia">
+      <button aria-label="Dia anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <span class="data">Ter, 3 nov</span>
+      <button aria-label="Próximo dia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+
+  <div class="cartao resumo">
+    <div class="anel">
+      <svg width="128" height="128" viewBox="0 0 128 128">
+        <circle cx="64" cy="64" r="54" fill="none" stroke="#E8E9E2" stroke-width="12"/>
+        <circle cx="64" cy="64" r="54" fill="none" stroke="#2F9E5B" stroke-width="12" stroke-linecap="round" stroke-dasharray="193.4 339.3"/>
+      </svg>
+      <div class="meio"><span class="num">732</span><span class="rot">kcal restantes</span></div>
+    </div>
+    <div class="macros">
+      <div class="consumo"><b>968</b> de 1.700 kcal</div>
+      <div class="macro">
+        <div class="linha1"><span>Proteína</span><span><b>73</b> / 120 g</span></div>
+        <div class="barra"><i style="width:61%;background:var(--laranja)"></i></div>
+      </div>
+      <div class="macro">
+        <div class="linha1"><span>Carboidrato</span><span><b>122</b> / 195 g</span></div>
+        <div class="barra"><i style="width:63%;background:var(--amarelo)"></i></div>
+      </div>
+      <div class="macro">
+        <div class="linha1"><span>Gordura</span><span><b>21</b> / 47 g</span></div>
+        <div class="barra"><i style="width:45%;background:var(--azul)"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini">
+    <div class="cartao">
+      <div class="ico" style="background:var(--azul-claro);color:var(--azul)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5C8 8 6 11.2 6 14.5a6 6 0 0012 0C18 11.2 16 8 12 2.5z"/></svg></div>
+      <div style="flex:1"><div class="t">Água</div><div class="v">5 de 8 copos</div><div class="gotas"><i></i><i></i><i></i><i></i><i></i><i class="vazia"></i><i class="vazia"></i><i class="vazia"></i></div></div>
+      <button class="btn-mais" style="background:var(--azul-claro);color:var(--azul)" aria-label="Mais um copo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    <div class="cartao">
+      <div class="ico" style="background:var(--laranja-claro);color:var(--laranja)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></div>
+      <div><div class="t">Jejum 16:8</div><div class="v">faltam 2h40</div></div>
+    </div>
+  </div>
+
+  <div class="refeicoes">
+    <div class="cartao ref">
+      <div class="ref-cab">
+        <div class="info"><div class="nome">Café da manhã</div><div class="kcal">395 kcal</div></div>
+        <button class="btn-mais" aria-label="Adicionar no café da manhã"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="item"><div class="n">Cuscuz de milho<div class="q">150 g</div></div><div class="k">170</div></div>
+      <div class="item"><div class="n">Ovo cozido<div class="q">2 unidades · 100 g</div></div><div class="k">146</div></div>
+      <div class="item"><div class="n">Queijo minas frescal<div class="q">1 fatia · 30 g</div></div><div class="k">79</div></div>
+    </div>
+
+    <div class="cartao ref">
+      <div class="ref-cab">
+        <div class="info"><div class="nome">Lanche da manhã</div><div class="kcal">69 kcal</div></div>
+        <button class="btn-mais" aria-label="Adicionar no lanche da manhã"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="item"><div class="n">Banana prata<div class="q">1 unidade · 70 g</div></div><div class="k">69</div></div>
+    </div>
+
+    <div class="cartao ref">
+      <div class="ref-cab">
+        <div class="info"><div class="nome">Almoço</div><div class="kcal">504 kcal</div></div>
+        <button class="btn-mais" aria-label="Adicionar no almoço"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="item"><div class="n">Arroz branco<div class="q">150 g</div></div><div class="k">192</div></div>
+      <div class="item"><div class="n">Feijão carioca<div class="q">1 concha · 140 g</div></div><div class="k">106</div></div>
+      <div class="item"><div class="n">Peito de frango grelhado<div class="q">120 g</div></div><div class="k">191</div></div>
+      <div class="item"><div class="n">Salada de alface e tomate<div class="q">80 g</div></div><div class="k">15</div></div>
+    </div>
+
+    <div class="cartao ref">
+      <div class="ref-cab">
+        <div class="info"><div class="nome">Lanche da tarde</div><div class="kcal">—</div></div>
+        <button class="btn-mais" aria-label="Adicionar no lanche da tarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="sugestao">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12a8 8 0 1016 0 8 8 0 00-16 0zM12 8v4l3 2"/></svg>
+        <span style="flex:1">Repetir de ontem: <b>pão francês + ovo</b> · 223 kcal</span>
+      </div>
+    </div>
+
+    <div class="cartao ref">
+      <div class="ref-cab">
+        <div class="info"><div class="nome">Jantar</div><div class="kcal">—</div></div>
+        <button class="btn-mais" aria-label="Adicionar no jantar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="vazio">Nada registrado ainda</div>
+    </div>
+  </div>
+
+  <nav class="abas">
+    <div class="aba ativa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 10h8M8 14h5"/></svg>Hoje</div>
+    <div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progresso</div>
+    <div class="aba"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+    <div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>Jejum</div>
+    <div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</div>
+  </nav>
+</body>
+</html>
