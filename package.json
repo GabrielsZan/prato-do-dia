@@ -1,0 +1,27 @@
+{
+  "name": "prato-do-dia",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "taco": "node scripts/build-taco.mjs",
+    "test": "vitest run",
+    "telas": "node scripts/screenshots.mjs"
+  },
+  "dependencies": {
+    "dexie": "^4.0.10",
+    "preact": "^10.25.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.9.4",
+    "fake-indexeddb": "^6.0.0",
+    "playwright-core": "^1.48.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vite-plugin-pwa": "^0.21.1",
+    "vitest": "^2.1.8"
+  }
+}
