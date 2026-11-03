@@ -100,7 +100,7 @@ describe('metas', () => {
     const perfil = { sexo: 'm' as const, idade: 30, alturaCm: 175, pesoKg: 85, atividade: 1.2, ritmoKgSemana: 0.5 };
     expect(avisoMeta(1700, perfil)).toMatch(/metabolismo basal/);
     expect(avisoMeta(1900, perfil)).toBeNull();
-    expect(avisoMeta(1300, null)).toMatch(/1500/);
+    expect(avisoMeta(1300, null)).toMatch(/1.500/);
   });
 
   it('a meta padrão fecha a conta', () => {

@@ -1,10 +1,11 @@
 import { render } from 'preact';
 import { registerSW } from 'virtual:pwa-register';
-import { Busca } from './telas/Busca';
+import { App } from './app';
 import { pedirArmazenamentoPersistente } from './lib/db';
 import './estilo.css';
+import './telas.css';
 
 registerSW({ immediate: true });
 pedirArmazenamentoPersistente();
 
-render(<Busca />, document.getElementById('app')!);
+render(<App />, document.getElementById('app')!);

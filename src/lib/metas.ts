@@ -34,9 +34,9 @@ export function avisoMeta(kcal: number, perfil: Perfil | null): string | null {
   const minimo = perfil?.sexo === 'f' ? 1200 : 1500;
   if (perfil) {
     const basal = Math.round(tmb(perfil));
-    if (kcal < basal) return `A meta está abaixo do seu metabolismo basal (${basal} kcal). Comer menos que isso por muito tempo não é recomendado.`;
+    if (kcal < basal) return `A meta está abaixo do seu metabolismo basal (${basal.toLocaleString('pt-BR')} kcal). Comer menos que isso por muito tempo não é recomendado.`;
   }
-  if (kcal < minimo) return `A meta está abaixo de ${minimo} kcal, o que é muito baixo para a maioria das pessoas.`;
+  if (kcal < minimo) return `A meta está abaixo de ${minimo.toLocaleString('pt-BR')} kcal, o que é muito baixo para a maioria das pessoas.`;
   return null;
 }
 
