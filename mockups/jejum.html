@@ -1,0 +1,99 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prato do Dia — Jejum</title><style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style><style>
+.titulo{font-size:28px;font-weight:800;letter-spacing:-.5px;padding:4px 16px 12px}
+.c{margin:0 16px 12px;padding:16px}
+.c h2{font-size:16px;font-weight:700}
+.suave{color:var(--suave);font-size:13px}
+.sub{display:flex;align-items:center;gap:6px;padding:4px 8px 12px}
+.sub h1{font-size:22px;font-weight:800}
+.abas{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:rgba(255,255,255,.94);border-top:1px solid var(--linha);display:flex;justify-content:space-around;padding-top:8px}
+.aba{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--suave);width:70px}
+.aba.ativa{color:var(--verde);font-weight:600}
+.aba svg{width:24px;height:24px}
+.fab{width:54px;height:54px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;margin-top:-22px;box-shadow:0 6px 16px rgba(47,158,91,.35)}
+.btn{width:100%;height:54px;border-radius:16px;background:var(--verde);color:#fff;font-size:17px;font-weight:700}
+.btn2{width:100%;height:50px;border-radius:14px;background:var(--verde-claro);color:var(--verde);font-size:16px;font-weight:700}
+
+.anel{position:relative;width:240px;height:240px;margin:8px auto 4px}
+.anel svg{transform:rotate(-90deg)}
+.meio{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.meio .t{font-size:13px;color:var(--suave)}
+.meio .h{font-size:44px;font-weight:800;letter-spacing:-1.5px;font-variant-numeric:tabular-nums}
+.meio .f{font-size:13px;color:var(--suave);margin-top:2px}
+.horas{display:flex;justify-content:space-between;margin:12px 4px 16px;font-size:13px;color:var(--suave)}
+.horas b{display:block;color:var(--texto);font-size:16px}
+.planos{display:flex;gap:8px;overflow-x:auto;margin:4px 0 2px}
+.planos span{flex-shrink:0;padding:8px 13px;border-radius:20px;background:var(--fundo);font-size:14px;font-weight:600}
+.planos .on{background:var(--laranja);color:#fff}
+.hist div{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--linha);font-size:14px}
+.hist div:last-child{border:none}
+.ok{color:var(--verde);font-weight:700}
+.quase{color:var(--laranja);font-weight:700}
+</style></head><body><div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<h1 class="titulo">Jejum</h1>
+<div class="cartao c">
+ <div class="anel"><svg width="240" height="240" viewBox="0 0 240 240">
+  <circle cx="120" cy="120" r="100" fill="none" stroke="#E8E9E2" stroke-width="16"/>
+  <circle cx="120" cy="120" r="100" fill="none" stroke="#F08A24" stroke-width="16" stroke-linecap="round" stroke-dasharray="523.5 628.3"/></svg>
+  <div class="meio"><span class="t">Em jejum há</span><span class="h">13:20:05</span><span class="f">faltam 2h40 · 83%</span></div>
+ </div>
+ <div class="horas"><span>Começou<b>ontem, 21:30</b></span><span style="text-align:right">Termina<b>hoje, 13:30</b></span></div>
+ <button class="btn" style="background:var(--laranja)">Encerrar jejum</button>
+ <p class="suave" style="text-align:center;margin-top:8px">Dá para corrigir o horário de início tocando em "Começou".</p>
+</div>
+<div class="cartao c">
+ <h2 style="margin-bottom:10px">Plano</h2>
+ <div class="planos"><span>12:12</span><span>14:10</span><span class="on">16:8</span><span>18:6</span><span>20:4</span><span>Personalizado</span></div>
+ <p class="suave" style="margin-top:8px">16 h de jejum, 8 h para comer.</p>
+</div>
+<div class="cartao c" style="margin-bottom:110px">
+ <h2 style="margin-bottom:4px">Últimos jejuns</h2>
+ <div class="hist">
+  <div><span>Ter, 3 nov · 16:8</span><span class="ok">16h12 ✓</span></div>
+  <div><span>Seg, 2 nov · 16:8</span><span class="quase">14h40</span></div>
+  <div><span>Dom, 1 nov · 16:8</span><span class="ok">16h05 ✓</span></div>
+ </div>
+</div>
+<nav class="abas">
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 10h8M8 14h5"/></svg>Hoje</div>
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progresso</div>
+<div class="aba"><div class="fab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+<div class="aba ativa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>Jejum</div>
+<div class="aba "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</div></nav></body></html>

@@ -1,0 +1,78 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prato do Dia — Compras</title><style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style><style>
+.titulo{font-size:28px;font-weight:800;letter-spacing:-.5px;padding:4px 16px 12px}
+.c{margin:0 16px 12px;padding:16px}
+.c h2{font-size:16px;font-weight:700}
+.suave{color:var(--suave);font-size:13px}
+.sub{display:flex;align-items:center;gap:6px;padding:4px 8px 12px}
+.sub h1{font-size:22px;font-weight:800}
+.abas{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:rgba(255,255,255,.94);border-top:1px solid var(--linha);display:flex;justify-content:space-around;padding-top:8px}
+.aba{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--suave);width:70px}
+.aba.ativa{color:var(--verde);font-weight:600}
+.aba svg{width:24px;height:24px}
+.fab{width:54px;height:54px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;margin-top:-22px;box-shadow:0 6px 16px rgba(47,158,91,.35)}
+.btn{width:100%;height:54px;border-radius:16px;background:var(--verde);color:#fff;font-size:17px;font-weight:700}
+.btn2{width:100%;height:50px;border-radius:14px;background:var(--verde-claro);color:var(--verde);font-size:16px;font-weight:700}
+
+.add{margin:0 16px 12px;display:flex;gap:8px}
+.add input{flex:1;height:48px;border-radius:14px;border:1.5px solid var(--linha);background:#fff;padding:0 14px;font-size:16px;font:inherit}
+.add button{width:48px;height:48px;border-radius:14px;background:var(--verde);color:#fff;display:grid;place-items:center}
+.lista{margin:0 16px 12px;overflow:hidden}
+.it{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--linha);font-size:16px}
+.it:last-child{border:none}
+.ck{width:24px;height:24px;border-radius:7px;border:2px solid #C9CCC3;flex-shrink:0;display:grid;place-items:center}
+.ck.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.feito{color:var(--suave);text-decoration:line-through}
+.rot{font-size:13px;font-weight:700;color:var(--suave);text-transform:uppercase;letter-spacing:.3px;margin:6px 20px 8px;display:flex;justify-content:space-between}
+.rot a{color:var(--verde);text-transform:none;letter-spacing:0}
+</style></head><body><div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="sub"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B746E" stroke-width="2.4" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg><h1>Lista de compras</h1></div>
+<div class="add"><input placeholder="Adicionar item (ex.: ovos)"><button><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+<div class="rot"><span>Para comprar · 4</span></div>
+<div class="cartao lista"><div class="it"><span class="ck"></span>Ovos (2 dúzias)</div><div class="it"><span class="ck"></span>Queijo minas</div><div class="it"><span class="ck"></span>Flocão de milho</div><div class="it"><span class="ck"></span>Peito de frango 1 kg</div></div>
+<div class="rot"><span>No carrinho · 2</span><a>Limpar marcados</a></div>
+<div class="cartao lista"><div class="it"><span class="ck on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="feito">Banana</span></div><div class="it"><span class="ck on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="feito">Pão francês</span></div></div>
+<p class="suave" style="margin:4px 20px">Toque para marcar; arraste para o lado para apagar. Quando houver cardápio (Etapa 7), dá para gerar a lista a partir dele.</p>
+<nav class="abas">
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 10h8M8 14h5"/></svg>Hoje</div>
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progresso</div>
+<div class="aba"><div class="fab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+<div class="aba "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>Jejum</div>
+<div class="aba ativa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</div></nav></body></html>
