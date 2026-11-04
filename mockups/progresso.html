@@ -1,0 +1,123 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prato do Dia — Progresso</title><style>
+:root {
+  --fundo: #F7F7F2;
+  --cartao: #FFFFFF;
+  --texto: #1E2420;
+  --suave: #6B746E;
+  --linha: #E8E9E2;
+  --verde: #2F9E5B;
+  --verde-claro: #E3F3E8;
+  --laranja: #F08A24;
+  --laranja-claro: #FDEBD8;
+  --amarelo: #E2B228;
+  --azul: #4F86E8;
+  --azul-claro: #E3ECFB;
+  --raio: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  width: 100%; max-width: 430px;
+  min-height: 844px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 15px; font-weight: 600; }
+.cartao { background: var(--cartao); border-radius: var(--raio); box-shadow: 0 1px 2px rgba(30,36,32,.05); }
+.suave { color: var(--suave); }
+button { font: inherit; border: none; background: none; color: inherit; cursor: pointer; }
+.btn-mais {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--verde-claro); color: var(--verde);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.btn-mais svg { width: 18px; height: 18px; }
+</style><style>
+.titulo{font-size:28px;font-weight:800;letter-spacing:-.5px;padding:4px 16px 12px}
+.c{margin:0 16px 12px;padding:16px}
+.c h2{font-size:16px;font-weight:700}
+.linha-t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.btn-p{font-size:14px;font-weight:700;color:var(--verde);background:var(--verde-claro);padding:7px 12px;border-radius:16px;display:flex;align-items:center;gap:4px}
+.grande{font-size:30px;font-weight:800;letter-spacing:-1px}
+.suave{color:var(--suave);font-size:13px}
+.abas{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:rgba(255,255,255,.94);border-top:1px solid var(--linha);display:flex;justify-content:space-around;padding-top:8px}
+.aba{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--suave);width:70px}
+.aba.ativa{color:var(--verde);font-weight:600}
+.aba svg{width:24px;height:24px}
+.fab{width:54px;height:54px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;margin-top:-22px;box-shadow:0 6px 16px rgba(47,158,91,.35)}
+.fundo{position:fixed;inset:0;background:rgba(20,24,22,.38)}
+.folha{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:430px;background:#fff;border-radius:24px 24px 0 0;padding:10px 18px 34px}
+.pega{width:38px;height:5px;border-radius:3px;background:var(--linha);margin:0 auto 14px}
+.folha h2{font-size:20px;font-weight:800}
+
+.seq{display:flex;align-items:center;gap:14px}
+.fogo{width:48px;height:48px;border-radius:14px;background:var(--laranja-claro);color:var(--laranja);display:grid;place-items:center;flex-shrink:0}
+.semana{display:flex;gap:6px;margin-top:12px}
+.semana span{flex:1;text-align:center;font-size:11px;color:var(--suave)}
+.semana i{display:block;width:26px;height:26px;border-radius:50%;margin:0 auto 3px;background:var(--linha)}
+.semana i.on{background:var(--verde)}
+.semana i.hoje{background:#fff;border:2px dashed var(--verde)}
+.nav-sem{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--suave)}
+.medias{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.medias div{background:var(--fundo);border-radius:12px;padding:10px 6px;text-align:center}
+.medias b{display:block;font-size:18px;font-weight:800}
+.medias span{font-size:11px;color:var(--suave)}
+.hist{margin:0 16px 110px;overflow:hidden}
+.dia{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linha)}
+.dia:last-child{border:none}
+.dia .d{width:64px;font-size:14px;font-weight:600}
+.dia .b{flex:1;height:7px;border-radius:4px;background:var(--linha);overflow:hidden}
+.dia .b i{display:block;height:100%;border-radius:4px}
+.dia .k{width:76px;text-align:right;font-size:13px}
+.dia .k b{font-size:14px}
+h3{font-size:13px;font-weight:700;color:var(--suave);text-transform:uppercase;letter-spacing:.3px;margin:4px 20px 8px}
+</style></head><body><div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<h1 class="titulo">Progresso</h1>
+<div class="cartao c"><div class="seq">
+ <div class="fogo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 5.5 5 11a5 5 0 01-10 0c0-2.5 1.2-3.8 2-5 .3 2 1.3 3 2.3 3C11 8 12 5 12 2z"/></svg></div>
+ <div><div class="grande">12 dias</div><div class="suave">seguidos registrando o que comeu</div></div></div>
+ <div class="semana"><span><i class="on"></i>S</span><span><i class="on"></i>T</span><span><i class="on"></i>Q</span><span><i class="on"></i>Q</span><span><i class="on"></i>S</span><span><i class="on"></i>S</span><span><i class="hoje"></i>D</span></div>
+</div>
+
+<div class="cartao c">
+ <div class="linha-t"><h2>Peso</h2><button class="btn-p"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Registrar</button></div>
+ <div style="display:flex;align-items:baseline;gap:10px"><span class="grande">84,2 kg</span><span style="color:var(--verde);font-weight:700;font-size:14px">−1,8 kg</span><span class="suave">em 5 semanas</span></div>
+ <div class="suave" style="margin:2px 0 6px">Faltam 4,2 kg para a meta</div>
+ <svg width="100%" viewBox="0 0 330 150">
+ <line x1="24" x2="326" y1="29.5" y2="29.5" stroke="#E8E9E2"/><text x="0" y="33.5" font-size="10" fill="#6B746E">86</text><line x1="24" x2="326" y1="56.5" y2="56.5" stroke="#E8E9E2"/><text x="0" y="60.5" font-size="10" fill="#6B746E">84</text><line x1="24" x2="326" y1="83.5" y2="83.5" stroke="#E8E9E2"/><text x="0" y="87.5" font-size="10" fill="#6B746E">82</text><line x1="24" x2="326" y1="110.5" y2="110.5" stroke="#E8E9E2"/><text x="0" y="114.5" font-size="10" fill="#6B746E">80</text>
+ <line x1="24" x2="326" y1="110.5" y2="110.5" stroke="#2F9E5B" stroke-dasharray="4 4" stroke-width="1.5"/>
+ <text x="326" y="105.5" font-size="10" fill="#2F9E5B" text-anchor="end" font-weight="700">meta 80 kg</text>
+ <polyline points="28,29.5 86,34.9 144,41.7 202,39.0 260,47.0 318,53.8" fill="none" stroke="#1E2420" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ <circle cx="28" cy="29.5" r="3.5" fill="#fff" stroke="#1E2420" stroke-width="2"/><text x="28" y="146" font-size="10" fill="#6B746E" text-anchor="middle">29/9</text><circle cx="86" cy="34.90000000000008" r="3.5" fill="#fff" stroke="#1E2420" stroke-width="2"/><text x="86" y="146" font-size="10" fill="#6B746E" text-anchor="middle">6/10</text><circle cx="144" cy="41.65000000000008" r="3.5" fill="#fff" stroke="#1E2420" stroke-width="2"/><text x="144" y="146" font-size="10" fill="#6B746E" text-anchor="middle">13/10</text><circle cx="202" cy="38.95000000000004" r="3.5" fill="#fff" stroke="#1E2420" stroke-width="2"/><text x="202" y="146" font-size="10" fill="#6B746E" text-anchor="middle">20/10</text><circle cx="260" cy="47.04999999999996" r="3.5" fill="#fff" stroke="#1E2420" stroke-width="2"/><text x="260" y="146" font-size="10" fill="#6B746E" text-anchor="middle">27/10</text><circle cx="318" cy="53.79999999999996" r="5" fill="#2F9E5B" stroke="#2F9E5B" stroke-width="2"/><text x="318" y="146" font-size="10" fill="#6B746E" text-anchor="middle">3/11</text>
+</svg>
+</div>
+
+<div class="cartao c">
+ <div class="linha-t"><h2>Semana</h2><span class="nav-sem">‹ &nbsp;28 out – 3 nov&nbsp; ›</span></div>
+ <svg width="100%" viewBox="0 0 330 140">
+ <line x1="0" x2="330" y1="25" y2="25" stroke="#1E2420" stroke-dasharray="3 4" opacity=".5"/>
+ <text x="330" y="20" font-size="10" fill="#6B746E" text-anchor="end">meta 1.700</text>
+ <rect x="12" y="27.5" width="28" height="82.5" rx="7" fill="#2F9E5B"/><text x="26" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">S</text><rect x="58" y="24" width="28" height="86" rx="7" fill="#2F9E5B"/><text x="72" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">T</text><rect x="104" y="31" width="28" height="79" rx="7" fill="#2F9E5B"/><text x="118" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">Q</text><rect x="150" y="14.5" width="28" height="95.5" rx="7" fill="#F08A24"/><text x="164" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">Q</text><rect x="196" y="25.5" width="28" height="84.5" rx="7" fill="#2F9E5B"/><text x="210" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">S</text><rect x="242" y="37.5" width="28" height="72.5" rx="7" fill="#2F9E5B"/><text x="256" y="128" font-size="11" fill="#6B746E" text-anchor="middle" font-weight="400">S</text><rect x="288" y="61.6" width="28" height="48.4" rx="7" fill="#D9DCD3"/><text x="302" y="128" font-size="11" fill="#1E2420" text-anchor="middle" font-weight="700">D</text>
+</svg>
+ <div class="medias">
+  <div><b>1.667</b><span>kcal/dia</span></div>
+  <div><b style="color:var(--laranja)">114 g</b><span>proteína/dia</span></div>
+  <div><b>5 de 6</b><span>dias na meta</span></div>
+ </div>
+ <div class="suave" style="margin-top:8px">Médias dos dias completos (hoje não entra). Verde = dentro da meta; laranja = fora.</div>
+</div>
+
+<h3>Histórico</h3>
+<div class="cartao hist">
+ <div class="dia"><span class="d">Hoje</span><span class="b"><i style="width:56.94117647058824%;background:#D9DCD3"></i></span><span class="k"><b>968</b> kcal<br><span class="suave" style="font-size:11px">73 g prot.</span></span></div><div class="dia"><span class="d">Sáb, 2</span><span class="b"><i style="width:85.29411764705883%;background:var(--verde)"></i></span><span class="k"><b>1.450</b> kcal<br><span class="suave" style="font-size:11px">104 g prot.</span></span></div><div class="dia"><span class="d">Sex, 1</span><span class="b"><i style="width:99.41176470588235%;background:var(--verde)"></i></span><span class="k"><b>1.690</b> kcal<br><span class="suave" style="font-size:11px">121 g prot.</span></span></div><div class="dia"><span class="d">Qui, 31</span><span class="b"><i style="width:100%;background:var(--laranja)"></i></span><span class="k"><b>1.910</b> kcal<br><span class="suave" style="font-size:11px">118 g prot.</span></span></div><div class="dia"><span class="d">Qua, 30</span><span class="b"><i style="width:92.94117647058823%;background:var(--verde)"></i></span><span class="k"><b>1.580</b> kcal<br><span class="suave" style="font-size:11px">109 g prot.</span></span></div><div class="dia"><span class="d">Ter, 29</span><span class="b"><i style="width:100%;background:var(--verde)"></i></span><span class="k"><b>1.720</b> kcal<br><span class="suave" style="font-size:11px">125 g prot.</span></span></div>
+</div>
+<nav class="abas">
+<div class="aba "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 10h8M8 14h5"/></svg>Hoje</div>
+<div class="aba ativa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progresso</div>
+<div class="aba"><div class="fab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>Jejum</div>
+<div class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</div></nav></body></html>
