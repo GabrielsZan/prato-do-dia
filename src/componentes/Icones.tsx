@@ -16,6 +16,8 @@ export const Copiar = ({ tam = 16 }: P) => <svg {...base(tam)}><rect x="8" y="8"
 export const Reticencias = ({ tam = 20 }: P) => <svg {...base(tam)}><circle cx="5" cy="12" r="1.3" /><circle cx="12" cy="12" r="1.3" /><circle cx="19" cy="12" r="1.3" /></svg>;
 export const Relogio = ({ tam = 16 }: P) => <svg {...base(tam, 2.2)}><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></svg>;
 export const Codigo = ({ tam = 22 }: P) => <svg {...base(tam, 2)}><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M16 8v8" /></svg>;
+export const Gota = ({ tam = 20 }: P) => <svg width={tam} height={tam} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5C8 8 6 11.2 6 14.5a6 6 0 0012 0C18 11.2 16 8 12 2.5z" /></svg>;
+export const Fogo = ({ tam = 24 }: P) => <svg width={tam} height={tam} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 5.5 5 11a5 5 0 01-10 0c0-2.5 1.2-3.8 2-5 .3 2 1.3 3 2.3 3C11 8 12 5 12 2z" /></svg>;
 export const Lixo = ({ tam = 18 }: P) => <svg {...base(tam, 2.2)}><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" /></svg>;
 export const Estrela = ({ tam = 20, cheia = false }: P & { cheia?: boolean }) => (
   <svg width={tam} height={tam} viewBox="0 0 24 24" fill={cheia ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linejoin="round">

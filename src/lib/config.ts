@@ -29,7 +29,11 @@ export const PADRAO = {
     { id: 'jantar', nome: 'Jantar', hora: '19:00' },
   ] as RefeicaoDoDia[],
   perfil: null as Perfil | null,
+  agua: { copoMl: 200, metaCopos: 10 } as ConfigAgua,
+  metaPeso: null as number | null,
 };
+
+export interface ConfigAgua { copoMl: number; metaCopos: number }
 
 export type ChaveConfig = keyof typeof PADRAO;
 

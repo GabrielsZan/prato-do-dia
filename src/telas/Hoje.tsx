@@ -13,6 +13,7 @@ import type { Registro } from '../lib/tipos';
 import { FolhaQuantidade } from './FolhaQuantidade';
 import { FolhaSoCalorias } from './FolhaSoCalorias';
 import { FolhaCopiar } from './FolhaCopiar';
+import { CartaoAgua } from './Agua';
 
 interface Props {
   data: string;
@@ -95,6 +96,8 @@ export function Hoje({ data, onData, onAdicionar }: Props) {
           ))}
         </div>
       </section>
+
+      <CartaoAgua data={data} />
 
       <div class="refeicoes">
         {cartoes.map((r) => {

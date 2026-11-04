@@ -12,6 +12,7 @@
     "telas": "node scripts/screenshots.mjs"
   },
   "dependencies": {
+    "chart.js": "^4.5.1",
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
     "preact": "^10.25.4",

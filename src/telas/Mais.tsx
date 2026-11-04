@@ -24,8 +24,6 @@ export function Mais({ onAbrir }: { onAbrir: (t: SubTela) => void }) {
         {item('Refeições do dia', 'Nomes e horários', () => onAbrir('refeicoes'))}
       </div>
       <div class="cartao mais-grupo">
-        {item('Água', 'Chega na Etapa 5')}
-        {item('Peso', 'Chega na Etapa 5')}
         {item('Lista de compras', 'Chega na Etapa 6')}
         {item('Backup', 'Chega na Etapa 6')}
       </div>

@@ -1,11 +1,12 @@
 import { render } from 'preact';
 import { registerSW } from 'virtual:pwa-register';
 import { App } from './app';
-import { pedirArmazenamentoPersistente } from './lib/db';
+import { db, pedirArmazenamentoPersistente } from './lib/db';
 import './estilo.css';
 import './telas.css';
 
 registerSW({ immediate: true });
+(window as unknown as { pratoDb: typeof db }).pratoDb = db; // para os testes automáticos e depuração
 pedirArmazenamentoPersistente();
 
 // Apaga o cache do app antigo (versões "prato-v1", "prato-v2"…), que não é mais usado.

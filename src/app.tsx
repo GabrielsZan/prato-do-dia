@@ -6,6 +6,7 @@ import { lerConfig, refeicaoDoHorario } from './lib/config';
 import { hojeISO } from './lib/datas';
 import { Hoje } from './telas/Hoje';
 import { Adicionar } from './telas/Adicionar';
+import { Progresso } from './telas/Progresso';
 import { Creditos, EmBreve, Mais, Metas, Refeicoes, type SubTela } from './telas/Mais';
 
 type Tela = { aba: Aba; sub?: SubTela; adicionar?: string };
@@ -54,7 +55,7 @@ export function App() {
     conteudo = (
       <>
         {tela.aba === 'hoje' && <Hoje data={data} onData={setData} onAdicionar={abrirAdicionar} />}
-        {tela.aba === 'progresso' && <EmBreve titulo="Progresso" etapa={5} />}
+        {tela.aba === 'progresso' && <Progresso onAbrirDia={(d) => { setData(d); setTela({ aba: 'hoje' }); }} />}
         {tela.aba === 'jejum' && <EmBreve titulo="Jejum" etapa={6} />}
         {tela.aba === 'mais' && <Mais onAbrir={(sub) => setTela({ aba: 'mais', sub })} />}
         <Abas ativa={tela.aba} onAba={(aba) => setTela({ aba })} onMais={abrirPeloHorario} />
