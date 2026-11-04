@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Folha } from '../componentes/Folha';
 import * as I from '../componentes/Icones';
 import { db } from '../lib/db';
-import { salvarConfig, useConfig } from '../lib/config';
+import { atualizarConfig, useConfig } from '../lib/config';
 import { fmtNum } from '../lib/diario';
 import { nomeDoDia } from '../lib/datas';
 
@@ -50,16 +50,16 @@ export function CartaoAgua({ data }: { data: string }) {
           <p class="agua-total suave">= {litros(copos * cfg.copoMl)} de {litros(meta * cfg.copoMl)}</p>
           <div class="qtd-porcoes azul">
             {TAMANHOS.map((ml) => (
-              <button key={ml} class={cfg.copoMl === ml ? 'on' : ''} onClick={() => salvarConfig('agua', { ...cfg, copoMl: ml })}>{ml} ml</button>
+              <button key={ml} class={cfg.copoMl === ml ? 'on' : ''} onClick={() => atualizarConfig('agua', (c) => ({ ...c, copoMl: ml }))}>{ml} ml</button>
             ))}
           </div>
           <p class="nota">Tamanho do copo</p>
           <div class="agua-meta">
             <span>Meta por dia</span>
             <div>
-              <button aria-label="Diminuir meta" onClick={() => salvarConfig('agua', { ...cfg, metaCopos: Math.max(1, meta - 1) })}>−</button>
+              <button aria-label="Diminuir meta" onClick={() => atualizarConfig('agua', (c) => ({ ...c, metaCopos: Math.max(1, c.metaCopos - 1) }))}>−</button>
               <b>{meta} copos ({litros(meta * cfg.copoMl)})</b>
-              <button aria-label="Aumentar meta" onClick={() => salvarConfig('agua', { ...cfg, metaCopos: meta + 1 })}>+</button>
+              <button aria-label="Aumentar meta" onClick={() => atualizarConfig('agua', (c) => ({ ...c, metaCopos: c.metaCopos + 1 }))}>+</button>
             </div>
           </div>
         </Folha>

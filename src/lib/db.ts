@@ -3,7 +3,7 @@ import type { Alimento, RefeicaoSalva, Registro, Uso } from './tipos';
 
 export interface Agua { data: string; copos: number }
 export interface Peso { data: string; kg: number }
-export interface Jejum { id?: number; inicio: number; fim: number | null; plano: string }
+export interface Jejum { id?: number; inicio: number; fim: number | null; plano: string; metaHoras: number }
 export interface ItemCompra { id?: number; texto: string; feito: 0 | 1; criadoEm: number }
 export interface Config { chave: string; valor: unknown }
 

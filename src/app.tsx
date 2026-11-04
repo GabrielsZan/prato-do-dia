@@ -7,7 +7,10 @@ import { hojeISO } from './lib/datas';
 import { Hoje } from './telas/Hoje';
 import { Adicionar } from './telas/Adicionar';
 import { Progresso } from './telas/Progresso';
-import { Creditos, EmBreve, Mais, Metas, Refeicoes, type SubTela } from './telas/Mais';
+import { Creditos, Mais, Metas, Refeicoes, type SubTela } from './telas/Mais';
+import { Jejum } from './telas/Jejum';
+import { Compras } from './telas/Compras';
+import { Backup } from './telas/Backup';
 
 type Tela = { aba: Aba; sub?: SubTela; adicionar?: string };
 
@@ -50,13 +53,15 @@ export function App() {
     const voltar = () => setTela({ aba: tela.aba });
     conteudo = tela.sub === 'metas' ? <Metas onVoltar={voltar} />
       : tela.sub === 'refeicoes' ? <Refeicoes onVoltar={voltar} />
+      : tela.sub === 'compras' ? <Compras onVoltar={voltar} />
+      : tela.sub === 'backup' ? <Backup onVoltar={voltar} />
       : <Creditos onVoltar={voltar} />;
   } else {
     conteudo = (
       <>
-        {tela.aba === 'hoje' && <Hoje data={data} onData={setData} onAdicionar={abrirAdicionar} />}
+        {tela.aba === 'hoje' && <Hoje data={data} onData={setData} onAdicionar={abrirAdicionar} onJejum={() => setTela({ aba: 'jejum' })} />}
         {tela.aba === 'progresso' && <Progresso onAbrirDia={(d) => { setData(d); setTela({ aba: 'hoje' }); }} />}
-        {tela.aba === 'jejum' && <EmBreve titulo="Jejum" etapa={6} />}
+        {tela.aba === 'jejum' && <Jejum />}
         {tela.aba === 'mais' && <Mais onAbrir={(sub) => setTela({ aba: 'mais', sub })} />}
         <Abas ativa={tela.aba} onAba={(aba) => setTela({ aba })} onMais={abrirPeloHorario} />
       </>

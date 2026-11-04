@@ -14,16 +14,18 @@ import { FolhaQuantidade } from './FolhaQuantidade';
 import { FolhaSoCalorias } from './FolhaSoCalorias';
 import { FolhaCopiar } from './FolhaCopiar';
 import { CartaoAgua } from './Agua';
+import { FaixaJejum } from './Jejum';
 
 interface Props {
   data: string;
   onData: (d: string) => void;
   onAdicionar: (refeicao: string) => void;
+  onJejum: () => void;
 }
 
 const OUTRAS: RefeicaoDoDia = { id: '_outras', nome: 'Outras refeições', hora: '23:59' };
 
-export function Hoje({ data, onData, onAdicionar }: Props) {
+export function Hoje({ data, onData, onAdicionar, onJejum }: Props) {
   const metas = useConfig('metas');
   const refeicoes = useConfig('refeicoes');
   const regs = useLiveQuery(() => db.registros.where('data').equals(data).sortBy('criadoEm'), [data]);
@@ -97,6 +99,7 @@ export function Hoje({ data, onData, onAdicionar }: Props) {
         </div>
       </section>
 
+      {data === hojeISO() && <FaixaJejum onAbrir={onJejum} />}
       <CartaoAgua data={data} />
 
       <div class="refeicoes">

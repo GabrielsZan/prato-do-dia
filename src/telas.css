@@ -249,3 +249,52 @@
 .linha-campo input[type=date] { position: absolute; inset: 0; opacity: 0; font-size: 16px; }
 .linha-campo input.visivel { width: 70px; text-align: right; border: 1.5px solid var(--linha); border-radius: 10px; padding: 6px 8px; font-size: 16px; font-weight: 700; background: var(--fundo); color: var(--texto); }
 .lista .linha.sel { background: var(--verde-claro); border-radius: 10px; padding-left: 8px; padding-right: 8px; }
+
+/* ---------- Jejum ---------- */
+.jejum-anel { position: relative; width: 240px; height: 240px; margin: 4px auto 8px; }
+.jejum-anel svg { transform: rotate(-90deg); }
+.jejum-anel circle { transition: stroke-dasharray .5s; }
+.jejum-anel .meio { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.jejum-anel .t { font-size: 13px; color: var(--suave); }
+.jejum-anel .h { font-size: 44px; font-weight: 800; letter-spacing: -1.5px; font-variant-numeric: tabular-nums; }
+.jejum-anel .f { font-size: 13px; color: var(--suave); margin-top: 2px; }
+.jejum-horas { display: flex; justify-content: space-between; margin: 8px 4px 16px; font-size: 13px; color: var(--suave); }
+.jejum-horas label, .jejum-horas span { position: relative; display: flex; flex-direction: column; }
+.jejum-horas .dir { text-align: right; }
+.jejum-horas b { color: var(--texto); font-size: 16px; }
+.jejum-horas input, .rel input { position: absolute; inset: 0; opacity: 0; font-size: 16px; width: 100%; }
+.rel { position: relative; }
+.laranja-bg { background: var(--laranja); }
+.nota.centro { text-align: center; }
+.planos-jejum .on { background: var(--laranja); }
+.faixa-jejum { width: calc(100% - 32px); margin: 10px 16px 0; padding: 10px 14px; display: flex; align-items: center; gap: 12px; text-align: left; color: var(--suave); }
+.jejum-ico { width: 36px; height: 36px; border-radius: 11px; background: var(--laranja-claro); color: var(--laranja); display: grid; place-items: center; flex-shrink: 0; }
+.jejum-ico svg { width: 20px; height: 20px; }
+.faixa-txt { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.faixa-txt b { font-size: 15px; color: var(--texto); }
+.faixa-txt .suave { font-weight: 400; }
+.faixa-barra { height: 6px; border-radius: 3px; background: var(--linha); overflow: hidden; }
+.faixa-barra i { display: block; height: 100%; background: var(--laranja); border-radius: 3px; }
+
+/* ---------- Compras ---------- */
+.compras-add { display: flex; gap: 8px; margin-bottom: 12px; }
+.compras-add input { flex: 1; min-width: 0; height: 48px; border-radius: 14px; border: 1.5px solid var(--linha); background: var(--cartao); padding: 0 14px; font-size: 16px; color: var(--texto); }
+.compras-add input:focus { outline: none; border-color: var(--verde); }
+.compras-add button { width: 48px; height: 48px; border-radius: 14px; background: var(--verde); color: #fff; display: grid; place-items: center; }
+.compras-add button:disabled { opacity: .4; }
+.compras-sec { display: flex; justify-content: space-between; align-items: baseline; }
+.compras-sec .link { text-transform: none; letter-spacing: 0; font-size: 13px; }
+.compras-lista { overflow: hidden; margin-bottom: 12px; }
+.compras-item-fundo { position: relative; border-bottom: 1px solid var(--linha); }
+.compras-item-fundo.arrastando { background: #C8412F; }
+.compras-item-fundo:last-child { border-bottom: none; }
+.compras-apagar { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #fff; }
+.compras-item { position: relative; width: 100%; display: flex; align-items: center; gap: 12px; padding: 13px 16px; background: var(--cartao); font-size: 16px; text-align: left; touch-action: pan-y; }
+.compras-ck { width: 24px; height: 24px; border-radius: 7px; border: 2px solid #C9CCC3; flex-shrink: 0; display: grid; place-items: center; color: #fff; }
+.compras-ck.on { background: var(--verde); border-color: var(--verde); }
+.compras-item.feito .compras-txt { color: var(--suave); text-decoration: line-through; }
+
+/* ---------- Backup ---------- */
+.info-linhas { margin: 6px 0 14px; }
+.info-linhas div { display: flex; justify-content: space-between; padding: 10px 0; font-size: 15px; border-bottom: 1px solid var(--linha); }
+.btn-secundario.rel { cursor: pointer; }

@@ -31,7 +31,11 @@ export const PADRAO = {
   perfil: null as Perfil | null,
   agua: { copoMl: 200, metaCopos: 10 } as ConfigAgua,
   metaPeso: null as number | null,
+  jejum: { plano: '16:8', horasPersonalizado: 16 } as ConfigJejum,
+  ultimoBackup: null as number | null,
 };
+
+export interface ConfigJejum { plano: string; horasPersonalizado: number }
 
 export interface ConfigAgua { copoMl: number; metaCopos: number }
 
@@ -44,6 +48,13 @@ export async function lerConfig<K extends ChaveConfig>(chave: K): Promise<(typeo
 
 export function salvarConfig<K extends ChaveConfig>(chave: K, valor: (typeof PADRAO)[K]) {
   return db.config.put({ chave, valor });
+}
+
+// Ler e mudar na mesma transação: dois toques rápidos não desfazem um ao outro.
+export function atualizarConfig<K extends ChaveConfig>(chave: K, mudar: (atual: (typeof PADRAO)[K]) => (typeof PADRAO)[K]) {
+  return db.transaction('rw', db.config, async () => {
+    await salvarConfig(chave, mudar(await lerConfig(chave)));
+  });
 }
 
 export function useConfig<K extends ChaveConfig>(chave: K): (typeof PADRAO)[K] {

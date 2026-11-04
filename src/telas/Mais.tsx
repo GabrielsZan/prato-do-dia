@@ -6,7 +6,7 @@ import { ATIVIDADES, RITMOS, avisoMeta, calcularMeta, distribuirMacros } from '.
 import { fmtNum } from '../lib/diario';
 import { totalCatalogo } from '../lib/alimentos';
 
-export type SubTela = 'metas' | 'refeicoes' | 'creditos';
+export type SubTela = 'metas' | 'refeicoes' | 'creditos' | 'compras' | 'backup';
 
 export function Mais({ onAbrir }: { onAbrir: (t: SubTela) => void }) {
   const metas = useConfig('metas');
@@ -24,8 +24,8 @@ export function Mais({ onAbrir }: { onAbrir: (t: SubTela) => void }) {
         {item('Refeições do dia', 'Nomes e horários', () => onAbrir('refeicoes'))}
       </div>
       <div class="cartao mais-grupo">
-        {item('Lista de compras', 'Chega na Etapa 6')}
-        {item('Backup', 'Chega na Etapa 6')}
+        {item('Lista de compras', 'Itens para marcar no mercado', () => onAbrir('compras'))}
+        {item('Backup', 'Exportar e restaurar seus dados', () => onAbrir('backup'))}
       </div>
       <div class="cartao mais-grupo">
         {item('Créditos das fontes de dados', 'TACO e Open Food Facts', () => onAbrir('creditos'))}

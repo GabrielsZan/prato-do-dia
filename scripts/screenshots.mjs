@@ -27,6 +27,8 @@ const esperarConsumido = async (v, msg) => {
 
 await p.goto(url);
 await p.waitForSelector('.tela-hoje');
+// Espera o app terminar de se instalar (o service worker assumir), para não recarregar no meio do teste.
+await p.waitForFunction(() => navigator.serviceWorker?.controller, null, { timeout: 15000 }).catch(() => {});
 await foto('1-hoje-vazio');
 
 // Alimento novo: + do café → digitar → tocar no resultado → Adicionar

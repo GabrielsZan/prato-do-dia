@@ -53,6 +53,8 @@ const consumido = () => p.textContent('[data-teste=consumido]');
 
 await p.goto(url);
 await p.waitForSelector('.tela-hoje');
+// Espera o app terminar de se instalar (o service worker assumir), para não recarregar no meio do teste.
+await p.waitForFunction(() => navigator.serviceWorker?.controller, null, { timeout: 15000 }).catch(() => {});
 
 // 1) Escanear um produto que existe no Open Food Facts
 let toques = 0;
