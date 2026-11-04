@@ -60,6 +60,44 @@ export async function buscarOFF(codigo: string, tempoMs = 8000): Promise<Resulta
   }
 }
 
+// Busca por nome, só em produtos vendidos no Brasil (br.openfoodfacts.org).
+// O Open Food Facts limita a ~10 buscas por nome por minuto; acima disso devolve uma página HTML.
+const BUSCA = 'https://br.openfoodfacts.org/cgi/search.pl';
+
+export type BuscaOFF =
+  | { tipo: 'ok'; alimentos: Alimento[] }
+  | { tipo: 'sem-internet' }
+  | { tipo: 'ocupado' };
+
+export async function buscarOFFPorNome(texto: string, tempoMs = 12000): Promise<BuscaOFF> {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), tempoMs);
+  const params = new URLSearchParams({
+    search_terms: texto, search_simple: '1', action: 'process', json: '1', page_size: '30', fields: `code,${CAMPOS}`,
+  });
+  try {
+    const r = await fetch(`${BUSCA}?${params}`, { signal: ctrl.signal });
+    if (!r.ok) return { tipo: r.status === 429 || r.status === 503 ? 'ocupado' : 'sem-internet' };
+    let json: any;
+    try { json = await r.json(); } catch { return { tipo: 'ocupado' }; }
+    const vistos = new Set<string>();
+    const alimentos: Alimento[] = [];
+    for (const p of json?.products ?? []) {
+      if (!p?.code || vistos.has(p.code)) continue;
+      vistos.add(p.code);
+      const res = lerProdutoOFF(p.code, { status: 1, product: p });
+      if (res.tipo === 'achou') alimentos.push(res.alimento); // sem calorias não serve para registrar
+    }
+    return { tipo: 'ok', alimentos };
+  } catch {
+    // Quando passa do limite, a resposta vem sem permissão de acesso e o navegador só vê "falhou".
+    // Então só é "sem internet" se o celular estiver mesmo desconectado.
+    return { tipo: typeof navigator !== 'undefined' && navigator.onLine === false ? 'sem-internet' : 'ocupado' };
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 // Confere o dígito verificador de EAN-8, UPC-A (12) e EAN-13.
 export function codigoValido(c: string): boolean {
   if (!/^\d{8}$|^\d{12,14}$/.test(c)) return false;

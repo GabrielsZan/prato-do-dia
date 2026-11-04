@@ -5,7 +5,7 @@ import * as I from '../componentes/Icones';
 import { db } from '../lib/db';
 import { useConfig } from '../lib/config';
 import { alimentoPorId, buscador, buscarPorCodigo, salvarProprio } from '../lib/alimentos';
-import { buscarOFF } from '../lib/off';
+import { buscarOFF, buscarOFFPorNome } from '../lib/off';
 import {
   calcular, copiarRefeicao, desfazer, fmtNum, qtdSugerida, registrar, registrarRefeicaoSalva, registrarSoCalorias, textoQtd,
 } from '../lib/diario';
@@ -35,6 +35,8 @@ export function Adicionar({ data, refeicao: refInicial, onFechar }: Props) {
   const [salvaAberta, setSalvaAberta] = useState<RefeicaoSalva | null>(null);
   const [escaneando, setEscaneando] = useState(false);
   const [form, setForm] = useState<{ alimento?: Alimento; rascunho?: Rascunho } | null>(null);
+  // Busca por nome no Open Food Facts: só quando ele toca no botão, para o texto atual.
+  const [off, setOff] = useState<{ texto: string; estado: 'carregando' | 'ok' | 'erro'; itens: Alimento[]; msg?: string } | null>(null);
   const campo = useRef<HTMLInputElement>(null);
 
   const usos = useLiveQuery(() => db.uso.toArray(), []) ?? [];
@@ -67,7 +69,30 @@ export function Adicionar({ data, refeicao: refInicial, onFechar }: Props) {
     setForm({ rascunho: { codigoBarras: codigo, ...(r.tipo === 'incompleto' ? { nome: r.nome, marca: r.marca } : {}) } });
   }
 
+  async function buscarOutrasMarcas() {
+    const q = texto.trim();
+    setOff({ texto: q, estado: 'carregando', itens: [] });
+    const r = await buscarOFFPorNome(q);
+    setOff((atual) => {
+      if (atual?.texto !== q) return atual; // ele já mudou o texto
+      if (r.tipo === 'ok') {
+        const jaNaLista = new Set(resultados.map((a) => a.id));
+        const itens = r.alimentos.filter((a) => !jaNaLista.has(a.id));
+        return { texto: q, estado: 'ok', itens, msg: itens.length ? undefined : 'Nenhum outro produto com calorias encontrado.' };
+      }
+      return { texto: q, estado: 'erro', itens: [], msg: r.tipo === 'ocupado'
+        ? 'Não consegui falar com o Open Food Facts agora (ele limita as buscas por minuto). Tente de novo em 1 minuto.'
+        : 'Sem internet. A busca de outras marcas precisa de conexão.' };
+    });
+  }
+
+  // Produto da busca online só fica salvo no celular quando é registrado.
+  async function garantirSalvo(a: Alimento) {
+    if (a.fonte === 'off' && !alimentoPorId(a.id)) await salvarProprio(a);
+  }
+
   async function rapido(a: Alimento) {
+    await garantirSalvo(a);
     if (texto) { setTexto(''); campo.current?.focus(); }
     const qtd = qtdSugerida(a, usoMap.get(a.id));
     const id = await registrar(data, refeicao, a, qtd);
@@ -165,6 +190,24 @@ export function Adicionar({ data, refeicao: refInicial, onFechar }: Props) {
       {texto && (
         <>
           <ul class="lista-add">{resultados.map((a) => linhaAlimento(a, usoMap.get(a.id)))}</ul>
+          {off?.texto === texto.trim() && off.itens.length > 0 && (
+            <>
+              <div class="secao-off">Open Food Facts · outras marcas</div>
+              <ul class="lista-add">{off.itens.map((a) => (
+                <li key={a.id} class="linha-add">
+                  <button class="n" onClick={() => setAberto(a)}>
+                    <b>{a.nome}</b>
+                    <span>{a.marca ? `${a.marca} · ` : ''}{fmtNum(a.por100.kcal ?? 0, 0)} kcal/100 g</span>
+                  </button>
+                  <button class="btn-mais" aria-label={`Registrar ${a.nome}`} onClick={() => rapido(a)}><I.Mais /></button>
+                </li>
+              ))}</ul>
+            </>
+          )}
+          {off?.texto === texto.trim() && off.msg && <p class="lista-vazia">{off.msg}</p>}
+          {off?.texto !== texto.trim() || off.estado === 'erro' ? (
+            <button class="atalho centro btn-off" onClick={buscarOutrasMarcas}><I.Lupa tam={16} />Buscar outras marcas no Open Food Facts</button>
+          ) : off.estado === 'carregando' ? <p class="lista-vazia">Buscando no Open Food Facts…</p> : null}
           {!resultados.length && (
             <div class="lista-vazia">
               Nada encontrado para “{texto}”.
@@ -187,6 +230,7 @@ export function Adicionar({ data, refeicao: refInicial, onFechar }: Props) {
             campo.current?.focus(); // ainda dentro do toque, para o teclado continuar aberto
             setAberto(null);
             setTexto('');
+            await garantirSalvo(aberto);
             const id = await registrar(data, ref, aberto, qtd);
             avisar(`${aberto.nome} · ${textoQtd(qtd)}`, () => desfazer([id]));
           }}

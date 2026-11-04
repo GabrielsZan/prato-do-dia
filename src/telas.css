@@ -184,3 +184,5 @@
 .perigo { color: #C8412F; }
 .busca-campo .cod { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: var(--texto); background: var(--cartao); margin-right: -6px; }
 .qtd-editar { font-size: 13px; font-weight: 600; color: var(--verde); margin-top: 4px; }
+.secao-off { padding: 18px 16px 4px; font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(--suave); }
+.btn-off { margin: 16px auto; color: var(--verde); display: flex; }

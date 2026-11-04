@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { codigoValido, lerProdutoOFF } from './off';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { buscarOFFPorNome, codigoValido, lerProdutoOFF } from './off';
 
 describe('Open Food Facts', () => {
   it('lê um produto completo', () => {
@@ -40,5 +40,35 @@ describe('Open Food Facts', () => {
     expect(codigoValido('7894900011518')).toBe(false);
     expect(codigoValido('96385074')).toBe(true);
     expect(codigoValido('123')).toBe(false);
+  });
+});
+
+describe('busca por nome no Open Food Facts', () => {
+  afterEach(() => vi.unstubAllGlobals());
+  const resposta = (corpo: unknown, ok = true, status = 200) =>
+    vi.stubGlobal('fetch', vi.fn(async () => ({ ok, status, json: async () => { if (typeof corpo === 'string') throw new Error('html'); return corpo; } })));
+
+  it('traz só produtos com calorias, sem repetidos', async () => {
+    resposta({ products: [
+      { code: '1', product_name: 'Iogurte A', brands: 'Itambé', nutriments: { 'energy-kcal_100g': 75 } },
+      { code: '1', product_name: 'Iogurte A', brands: 'Itambé', nutriments: { 'energy-kcal_100g': 75 } },
+      { code: '2', product_name: 'Iogurte B', nutriments: {} },
+      { code: '3', product_name: 'Iogurte C', brands: 'Danone', nutriments: { 'energy-kcal_100g': 52 } },
+    ] });
+    const r = await buscarOFFPorNome('iogurte');
+    expect(r.tipo === 'ok' && r.alimentos.map((a) => [a.id, a.marca])).toEqual([['off:1', 'Itambé'], ['off:3', 'Danone']]);
+  });
+
+  it('página de limite vira "ocupado"', async () => {
+    resposta('<!DOCTYPE html>');
+    expect((await buscarOFFPorNome('x')).tipo).toBe('ocupado');
+  });
+
+  it('falha de rede: sem internet só se o celular estiver desconectado', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('Failed to fetch'); }));
+    vi.stubGlobal('navigator', { onLine: false });
+    expect((await buscarOFFPorNome('x')).tipo).toBe('sem-internet');
+    vi.stubGlobal('navigator', { onLine: true });
+    expect((await buscarOFFPorNome('x')).tipo).toBe('ocupado');
   });
 });

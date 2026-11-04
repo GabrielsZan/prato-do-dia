@@ -117,6 +117,31 @@ await p.locator('.add-pronto').click();
 await p.waitForTimeout(300);
 conferir((await consumido()) === String(kcalCoca + 120), `dia: ${await consumido()} kcal (esperado ${kcalCoca + 120})`);
 
+// 5) Buscar outras marcas pelo nome no Open Food Facts (com internet)
+await contexto.setOffline(false);
+await p.locator('[data-refeicao=jantar] .btn-mais').click();
+await p.locator('.busca-campo input').fill('iogurte natural');
+const antes = await p.locator('.lista-add .linha-add').count();
+await p.locator('.btn-off').click();
+await p.waitForFunction(() => !document.body.textContent.includes('Buscando no Open Food Facts'), null, { timeout: 20000 }).catch(() => {});
+await p.waitForTimeout(300);
+const marcas = await p.locator('.secao-off + .lista-add .linha-add .n span').allTextContents();
+const msg = await p.locator('.lista-vazia').allTextContents();
+conferir(marcas.length > 0, `outras marcas: ${marcas.length} produtos (${marcas.slice(0, 4).join(' | ')})${msg.length ? ' · aviso: ' + msg.join(' ') : ''}`);
+conferir((await p.locator('.lista-add').first().locator('.linha-add').count()) === antes, 'os resultados normais continuam iguais em cima');
+await p.evaluate(() => window.scrollTo(0, 0));
+await foto('11-outras-marcas');
+if (marcas.length) {
+  const nome = await p.locator('.secao-off + .lista-add .linha-add b').first().textContent();
+  await p.locator('.secao-off + .lista-add .linha-add .n').first().click();
+  await p.locator('.btn-principal').click();
+  await p.waitForTimeout(300);
+  await p.locator('.abinhas button', { hasText: 'Meus' }).click();
+  const meus2 = await p.locator('.lista-add .linha-add b').allTextContents();
+  conferir(meus2.includes(nome), `registrado e salvo no celular: ${nome}`);
+  await p.locator('.add-pronto').click();
+}
+
 await nav.close();
 servidor.httpServer.close();
 process.exit(falhou ? 1 : 0);
