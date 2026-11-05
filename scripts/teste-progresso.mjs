@@ -72,7 +72,7 @@ await verificar(async () => [(await texto('[data-teste=peso-atual]')) === '84,7 
 // Médias da semana atual: dias fechados desde segunda
 const fechados = kcalDia.map((k, i) => ({ k, d: dia(-1 - i) })).filter((x) => x.d >= segunda);
 const media = fechados.length ? Math.round(fechados.reduce((s, x) => s + x.k, 0) / fechados.length) : null;
-const naMeta = fechados.filter((x) => x.k >= 1360 && x.k <= 1785).length;
+const naMeta = fechados.filter((x) => x.k <= 1700).length;
 const mostrado = await texto('[data-teste=media-kcal]');
 conferir(mostrado === (media == null ? '—' : media.toLocaleString('pt-BR')), `média da semana: ${mostrado} kcal (esperado ${media})`);
 await verificar(async () => [(await texto('[data-teste=na-meta]')) === (fechados.length ? `${naMeta} de ${fechados.length}` : '—'), `dias na meta: ${await texto('[data-teste=na-meta]')}`]);

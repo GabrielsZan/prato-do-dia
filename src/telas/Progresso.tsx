@@ -67,7 +67,7 @@ export function Progresso({ onAbrirDia }: { onAbrirDia: (data: string) => void }
           <div><b class="laranja">{semana.mediaProteina == null ? '—' : `${fmtNum(semana.mediaProteina, 0)} g`}</b><span>proteína/dia</span></div>
           <div><b data-teste="na-meta">{semana.completos ? `${semana.naMeta} de ${semana.completos}` : '—'}</b><span>dias na meta</span></div>
         </div>
-        <p class="nota">Médias dos dias já fechados com registro (hoje não entra). Verde = dentro da meta (80% a 105% de {fmtNum(metas.kcal, 0)} kcal).</p>
+        <p class="nota">Médias dos dias já fechados com registro (hoje não entra). Verde = até {fmtNum(metas.kcal, 0)} kcal; laranja = passou da meta.</p>
       </section>
 
       <h3 class="secao">Histórico</h3>

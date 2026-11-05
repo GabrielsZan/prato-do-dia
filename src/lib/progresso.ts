@@ -3,8 +3,8 @@ import { somar } from './diario';
 import { deISO, paraISO, somarDias } from './datas';
 import type { Registro } from './tipos';
 
-// Dentro da meta: entre 80% e 105% das calorias da meta.
-export const dentroDaMeta = (kcal: number, meta: number) => kcal >= meta * 0.8 && kcal <= meta * 1.05;
+// Dentro da meta: até as calorias da meta (sem passar).
+export const dentroDaMeta = (kcal: number, meta: number) => kcal <= meta;
 
 export interface ResumoDia { data: string; kcal: number; proteina: number; itens: number }
 

@@ -8,10 +8,10 @@ const reg = (data: string, kcal: number, proteina = 0): Registro => ({
 });
 
 describe('progresso', () => {
-  it('dentro da meta = 80% a 105%', () => {
-    expect(dentroDaMeta(1360, 1700)).toBe(true);
-    expect(dentroDaMeta(1785, 1700)).toBe(true);
-    expect(dentroDaMeta(1359, 1700)).toBe(false);
+  it('dentro da meta = até a meta, sem passar', () => {
+    expect(dentroDaMeta(900, 1700)).toBe(true);
+    expect(dentroDaMeta(1700, 1700)).toBe(true);
+    expect(dentroDaMeta(1701, 1700)).toBe(false);
     expect(dentroDaMeta(1786, 1700)).toBe(false);
   });
 
